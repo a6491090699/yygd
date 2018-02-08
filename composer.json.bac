@@ -1,0 +1,31 @@
+{
+    "name" : "a6491090699/yygd",
+    "description" : "gd class" ,
+    "homepage" : "",
+    "keywords" : [
+            "image" ,
+            "gd" ,
+            "watermark" ,
+            "thumbnail" ,
+            "img"
+    ],
+    "license" : "MIT",
+    "author" : [
+        {
+            "name" : "yy",
+            "email" : "649109069@qq.com",
+            "homepage" : ""
+        }
+    ],
+    "require" : {
+
+    },
+    "suggest" : {
+
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Yy\\Gd" : "src/Yy/Gd"
+        }
+    }
+}
