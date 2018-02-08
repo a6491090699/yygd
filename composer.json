@@ -1,0 +1,31 @@
+{
+    "name" : "yygd",
+    "description" : "gd class" ,
+    "homepage" : "",
+    "keywords" : [
+            "image" ,
+            "gd" ,
+            "watermark" ,
+            "thumbnail" ,
+            "img"
+    ],
+    "license" : "",
+    "author" : [
+        {
+            "name" : "yy",
+            "email" : "649109069@qq.com",
+            "homepage" : ""
+        }
+    ],
+    "require" : {
+        "php" : ">=5.4.0"
+    },
+    "suggest" : {
+
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Yy\\Gd" : "src/Yy/Gd"
+        }
+    }
+}
