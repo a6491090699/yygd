@@ -1,5 +1,5 @@
 {
-    "name" : "yygd",
+    "name" : "a6491090699/yygd",
     "description" : "gd class" ,
     "homepage" : "",
     "keywords" : [
@@ -18,7 +18,7 @@
         }
     ],
     "require" : {
-        
+
     },
     "suggest" : {
 
