@@ -1,6 +1,6 @@
 <?php
     namespace Yy\Gd;
-
+// hehe
     class image
     {
 
