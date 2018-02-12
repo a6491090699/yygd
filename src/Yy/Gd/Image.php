@@ -7,9 +7,13 @@
         public $height;
         protected $img;
         public $mime;
+        public $ext;
+        public $file_path;
 
-        public function __construct()
+        public function __construct($file_path)
         {
+            $this->file_path = $file_path;
+            $this->open($file_path);
             function p($data)
             {
                 echo '<pre>';
@@ -30,6 +34,7 @@
 
             $arr = explode('/' , $mime);
             $ext = $arr[1];
+            $this->ext = $ext;
             $create = 'imagecreatefrom'.$ext;
             $img = $create($file);
 
@@ -38,6 +43,113 @@
             // return $r;
 
         }
+
+        public function fontmark($fontsize=20,$jiaodu=0,$x=0 , $y=0,$text='testing')
+        {
+            $img = $this->img;
+            $back_color = imagecolorallocate($img, 255,255,255);
+            $color = imagecolorallocate($img, 255,255,0);
+            imagettftext($img, $fontsize, $jiaodu, $x, $y, $color, __DIR__.'/fonts/font.ttf', $text);
+
+            header('content-type:image/jpeg');
+            imagejpeg($img);
+
+        }
+
+        public function imagemark($water , $pos=1 , $touming=100)
+        {
+            $img = $this->img;
+            $water_info = getimagesize($water);
+            $water_mime = $water_info['mime'];
+            $c = explode('/',$water_mime);
+            $create = 'imagecreatefrom'.array_pop($c);
+            $water_img = $create($water);
+            // 将图片拷贝在一起就可以
+            switch($pos){
+                case 1:
+                    $x = 0;
+                    $y = 0;
+                    break;
+                case 2:
+                    $x = $this->width/3;
+                    $y = 0;
+                    break;
+                case 3:
+                    $x = $this->width/3*2;
+                    $y = 0;
+                    break;
+
+                case 4:
+                    $x =0;
+                    $y = $this->height/3;
+                    break;
+                case 5:
+                    $x = $this->width/3;
+                    $y = $this->height/3;
+                    break;
+                case 6:
+                    $x = $this->width/3*2;
+                    $y = $this->height/3;
+                    break;
+                case 7:
+                    $x = 0;
+                    $y = $this->height/3*2;
+                    break;
+                case 8:
+                    $x = $this->width/3;
+                    $y = $this->height/3*2;
+                    break;
+                case 9:
+                    $x = $this->width/3*2;
+                    $y = $this->height/3*2;
+                    break;
+
+                default:
+                    $x =mt_rand(0,$this->width);
+                    $y =mt_rand(0,$this->height);
+            }
+            imagecopymergegray($img,$water_img , $x,$y,0,0,$water_info[0] ,$water_info[1] , $touming);
+            header('content-type:'.$this->mime);
+            $s = 'image'.$this->ext;
+            $s($img);
+            imagedestroy($water_img);
+
+        }
+
+        public function zoom($width =200,$height=200,$path='./')
+        {
+            if(empty($this->img)) die(404);
+
+            $img = $this->img;
+
+            if(($width/$this->width ) < ($height/$this->height))
+            {
+                $dw = $width ;
+                $dh = $this->height*($width/$this->width);
+                $pre = $width.'_';
+            }else{
+                $dh = $height ;
+                $dw = $this->width*($height/$this->height);
+                $pre = $height.'_';
+            }
+
+            $simg = imagecreatetruecolor($dw, $dh);
+            // echo $this->width.$this->height;exit;
+            imagecopyresampled($simg , $img ,0,0,0,0,$dw , $dh ,$this->width , $this->height);
+
+            $arr1 = explode('/',$this->file_path);
+            $name = array_pop($arr1);
+
+            $s = 'image'.$this->ext;
+            $s($simg,$path.$pre.$name);
+            return true;
+            imagedestroy($simg);
+            // return
+
+
+        }
+
+
 
         //画像素点
         public function addPix()
@@ -65,11 +177,7 @@
 
         }
 
-         // 等比例缩放
-         public function zoom()
-         {
 
-         }
 
          //  裁剪
 

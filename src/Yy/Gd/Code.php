@@ -76,7 +76,7 @@
             }
         }
 
-        public function createHtml()
+        public function createHtml($route)
         {
             $url = 'code.php';
             $html =<<<EOT
